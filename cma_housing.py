@@ -1,4 +1,5 @@
 import pandas as pd
+import matplotlib.pyplot as plt
 
 # read the csv file
 df = pd.read_csv("chmc-cma.csv")
@@ -24,5 +25,13 @@ table = pd.DataFrame({
     "2024": get_values("24")
 }).set_index("Month")
 
-# print the table
-print(table)
+# print the table to show the summary statistics
+print(table[["2014","2024"]].describe())
+
+# create a bar chart
+table[["2014", "2024"]].plot.bar()
+plt.title("2014 vs 2024 Monthly Housing Units")
+plt.xlabel("Month")
+plt.ylabel("Units")
+plt.legend(["2014","2024"])
+plt.show()
