@@ -73,7 +73,7 @@ print("Interpretation: Dec 2024 is", "higher than"
     else "equal to", "the total average.")
 
 # STEP 4 _________________________________________________________________
-# change the two digit year to full year
+# change two digit year to full year
 def parse_year(two_digit_year):
     record_year = int(two_digit_year)
     if record_year >= 90:
@@ -91,22 +91,22 @@ for column_name in df.columns:
         units = int(str(total_units[column_name]).replace(",", ""))
         monthly_records.append((full_year, month_index, units))
 
-# check if year and month are within range
+# check if the year and month are within range
 def within_range(record_year, record_month, start_year, 
                 start_month, end_year, end_month):
     if record_year > start_year:
-        left = True
+        start = True
     elif record_year == start_year and record_month >= start_month:
-        left = True
+        start = True
     else:
-        left = False
+        start = False
     if record_year < end_year:
-        right = True
+        end = True
     elif record_year == end_year and record_month <= end_month:
-        right = True
+        end = True
     else:
-        right = False
-    return left and right
+        end = False
+    return start and end
 
 # data for both harper and trudeau
 harper = []
@@ -122,13 +122,11 @@ for (record_year, record_month, record_units) in monthly_records:
 # cutoff units
 unit_cutoff = 10000
 
-# probabilities for both harper and trudeau
-harper_success = sum(1 for record_units in harper 
-                    if record_units > unit_cutoff)
+# probability for both harper and trudeau
+harper_success = sum(1 for record_units in harper if record_units > unit_cutoff)
 harper_probability = harper_success / len(harper)
 
-trudeau_success = sum(1 for record_units in trudeau 
-                    if record_units > unit_cutoff)
+trudeau_success = sum(1 for record_units in trudeau if record_units > unit_cutoff)
 trudeau_probability = trudeau_success / len(trudeau)
 
 # print the probabilities for both harper and trudeau
@@ -138,7 +136,7 @@ print(f"Harper (more than 10,000 units): {harper_probability:.2f} "
 print(f"Trudeau (more than 10,000 units): {trudeau_probability:.2f} "
     f"({trudeau_success} out of {len(trudeau)} months)")
 
-# compare results
+# compare the results
 if harper_probability > trudeau_probability:
     print("Compare: Harper has a higher probability than Trudeau")
 elif trudeau_probability > harper_probability:
